@@ -40,7 +40,7 @@ class JSONField(models.Field):
         try:
             return 'json' if get_version(connection) >= 90200 else 'text'
         except AttributeError:
-            return text
+            return 'text'
 
     def get_db_prep_lookup(self, lookup_type, value, connection,
                            prepared=False):
