@@ -37,7 +37,10 @@ class JSONField(models.Field):
                                         default=default, **kwargs)
 
     def db_type(self, connection):
-        return 'json' if get_version(connection) >= 90200 else 'text'
+        try:
+            return 'json' if get_version(connection) >= 90200 else 'text'
+        except AttributeError:
+            return text
 
     def get_db_prep_lookup(self, lookup_type, value, connection,
                            prepared=False):
